@@ -1,0 +1,240 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+//Struct Arquivo
+typedef struct arquivo {
+	int codigo;
+	float salario;
+	char nome;
+}arq;
+//Struct Lista Duplamente Encadeada
+typedef struct nodo{
+	int codigo;
+	float salario;
+	char nome;
+	struct nodo *ant;
+	struct nodo *prox;
+}listaD;
+
+//Chamando as funções
+void Cadastrar(FILE *fid);
+void InserirInicio(listaD **inicioListaD, listaD **pListaD, listaD **fimListaD);
+//INSERIR MEIO E ORDENAR
+void InserirFim(listaD **inicioListaD, listaD *pListaD, listaD **fimListaD);
+void ImprimirLista(listaD **inicioListaD, listaD **pListaD);
+void ImprimirMaiorValor(listaD **inicioListaD);
+
+//Inicio main
+main(){
+	FILE *fid;
+	listaD *pListaD = NULL, *inicioListaD = NULL, *fimListaD = NULL;
+	int op = 1;
+
+	//Menu
+	while (op != 0){
+        printf("\nMENU PRINCIPAL");       
+        printf("[1]Cadastrar.\n");
+        printf("[2]Imprimir a lista.\n");
+        printf("[3]Imprimir maior valor.\n");
+        printf("[4]Imprimir em ordem crescente.\n");
+        printf("[0]Sair.\n");
+        printf("\n\t");
+        scanf("%d", &op);
+
+        switch(op){
+        	case 1:
+        	Cadastrar(FILE *fid);
+            break;
+            case 2:
+            ImprimirLista(listaD **inicioListaD, listaD **pListaD);
+            break;
+            case 3:
+            //Imprimir maior valor
+            break;
+            case 4:
+            //Ordenar de ordem crescente de código
+            //Imprimir novamente
+            break;
+        }
+	}
+}
+//Funções
+void Cadastrar(FILE *fid){
+	int auxcod;
+	int cont=0;
+
+    if(cont=0){
+    	fid=fopen(arq_lote.bin,"a+t");
+            printf("\nDigite o codigo: ");
+            scanf("%d",&arq.codigo);
+            fprintf(fid,"%d",arq.codigo);
+            printf("\n Digite o salario: ");
+            scanf("%f",&arq.salario);
+            fprintf(fid,"%f",arq.salario);
+            printf("\n Digite o nome: ");
+            scanf("%s",&arq.nome);
+            fprintf(fid,"%s",arq.nome);
+            fclose(fid);
+            cont++;
+            InserirInicio(listaD **inicioListaD, listaD **pListaD, listaD **fimListaD);
+        }
+    else
+    	printf("Digite o codigo: ");
+    	scanf("%d",&auxcod);
+    	if(auxcod<=10){//------------------------/*função InserirInicio*/
+    		fid=fopen(arq_lote.bin,"a+t");
+			arq.codigo=auxcod;
+			fprintf(fid,"%d",arq.codigo);
+            printf("\nDigite o salario: ");
+            scanf("%f",&arq.salario);
+            fprintf(fid,"%f",arq.salario);
+            printf("\nDigite o nome: ");
+            scanf("%s",&arq.nome);
+            fprintf(fid,"%s",arq.nome);
+            fclose(fid);
+    		InserirInicio(listaD **inicioListaD, listaD **pListaD, listaD **fimListaD);
+    	}
+    	else if(auxcod=>11 && auxcod<=25){/*função InserirMeio -e em ordem crescente-*/
+    		fid=fopen(arq_lote.bin,"a+t");
+			arq.codigo=auxcod;
+			fprintf(fid,"%d",arq.codigo);
+            printf("\nDigite o salario: ");
+            scanf("%f",&arq.salario);
+            fprintf(fid,"%f",arq.salario);
+            printf("\nDigite o nome: ");
+            scanf("%s",&arq.nome);
+            fprintf(fid,"%s",arq.nome);
+            fclose(fid);
+            
+    	}
+    	else{ /*(auxcod>23)*///-------------------/*função InserirFim*/
+    		fid=fopen(arq_lote.bin,"a+t"); 
+			arq.codigo=auxcod;
+			fprintf(fid,"%d",arq.codigo);
+            printf("\nDigite o salario: ");
+            scanf("%f",&arq.salario);
+            fprintf(fid,"%f",arq.salario);
+            printf("\nDigite o nome: ");
+            scanf("%s",&arq.nome);
+            fprintf(fid,"%s",arq.nome);
+            fclose(fid);
+            InserirFim(listaD **inicioListaD, listaD *pListaD, listaD **fimListaD);
+        }
+    }
+
+void InserirInicio(listaD **inicioListaD, listaD **pListaD, listaD **fimListaD){
+	listaD *pAux;
+	//Alocar a memória
+	pListaD = (listaD*)malloc(sizeof(listaD));
+
+	if(pListaD){
+		if(*inicioListaD == NULL){
+			*inicioListaD = pListaD;
+			fid=fopen(arq_lote.bin,"r");
+			pListaD->codigo=arq.codigo;
+			pListaD->salario=arq.salario;
+			pListaD->nome=arq.nome;
+			fclose(fid);
+			pListaD->ant = NULL;
+			pListaD->prox = NULL;
+				if(pListaD->prox == NULL){
+					*fimListaD = pListaD;
+				}
+		}else{
+			pAux = *inicioListaD;
+			pAux->ant = pListaD;
+			*inicioListaD = pListaD;
+			fid=fopen(arq_lote.bin,"r");
+			pListaD->codigo=arq.codigo;
+			pListaD->salario=arq.salario;
+			pListaD->nome=arq.nome;
+			fclose(fid);
+			pListaD->prox = pAux;
+				if(pListaD->prox == NULL){
+					*fimListaD = pListaD;}
+		}
+
+	}else {
+		printf("Erro ao alocar memoria para a lista (malloc)\n");
+		}
+}
+void InserirMeio(listaD **inicioListaD, listaD **pListaD, listaD **fimListaD){
+}
+void InserirFim(listaD **inicioListaD, listaD *pListaD, listaD **fimListaD){
+	listaD *pAux;
+	//Alocar memória
+	pListaD = (listaD*)malloc(sizeof(listaD));
+
+	if(pListaD){
+		if(*inicioListaD == NULL){
+			*inicioListaD = pListaD;
+			fid=fopen(arq_lote.bin,"r");
+			pListaD->codigo=arq.codigo;
+			pListaD->salario=arq.salario;
+			pListaD->nome=arq.nome;
+			fclose(fid);
+			pListaD->ant = NULL;
+			pListaD->prox = NULL;
+				if(pListaD->prox == NULL){
+					*fimListaD = pListaD;
+				}
+		}else{
+			pAux = *inicioListaD;
+
+			while(pAux->prox != NULL){
+			pAux = pAux->prox;
+			pListaD->ant = pAux;
+			pListaD->prox = NULL;
+			fid=fopen(arq_lote.bin,"r");
+			pListaD->codigo=arq.codigo;
+			pListaD->salario=arq.salario;
+			pListaD->nome=arq.nome;
+			fclose(fid);
+			pAux->prox =pListaD;
+				if(pListaD->prox == NULL){
+					*fimListaD = pListaD;
+			}
+		}
+	}
+	}else {
+		printf("Erro ao alocar memoria para a lista (malloc)\n");
+		}
+}
+void ImprimirLista(listaD **inicioListaD, listaD **pListaD){
+
+	if(inicioListaD==NULL){
+        printf("A lista esta vazia!");
+    } else {
+        pListaD=inicioListaD;
+        while(pListaD!=NULL){
+            printf("Codigo  =%d",pListaD->codigo);
+            printf("Salario =%2.f",pListaD->salario);
+            printf("Nome    =%s",pListaD->nome);
+            pListaD=pListaD->prox;
+        }
+
+    }
+}
+void ImprimirMaiorValor(listaD **inicioListaD, listaD **pListaD){
+	int aux;
+
+	if (inicioListaD!=NULL){
+		aux=inicioListaD->salario;
+		pListaD=inicioListaD->prox;
+		while(pListaD!=NULL){
+		if(aux<pListaD->salario){
+			aux=pListaD->salario;
+			pListaD=pListaD->prox;
+		}
+		else{
+			pListaD=pListaD->prox;
+		}
+	}
+	}
+	printf("Maior salario: %d",aux);
+}
+
+void Ordenar(FILE *fid){
+	fid=fopen(arq_lote.bin,"r+t");
+	
+}

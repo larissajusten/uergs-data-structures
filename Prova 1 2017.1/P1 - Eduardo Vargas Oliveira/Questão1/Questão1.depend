@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1492716186 source:c:\users\eduardo\desktop\questão1\main.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+
+1492716186 source:c:\users\eduardo\desktop\prova de estruturas\questão1\main.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+
