@@ -7,16 +7,17 @@ Uma string é considerada palíndromo se ela pode ser lida da esquerda para a di
 Neste caso, não podemos considerar as acentuações, as letras maiúsculas ou minúsculas, os espaços e os caracteres especiais.
 A seguir, estão alguns exemplos:
 
-	Ex1.: subi no onibus
-	Ex2.: radar
+    Ex1.: subi no onibus
+    Ex2.: radar
 
 Escreva um programa que determine se uma expressão é palíndroma ou não.
 */
 
-typedef struct no{
+typedef struct no
+{
     char string;
     struct no *prox;
-}Nodo;
+} Nodo;
 
 void Push(Nodo **Base1, Nodo **Topo1, char plv);
 void Palindroma(Nodo **Base1, Nodo **Topo1);
@@ -24,19 +25,22 @@ void Zerar(Nodo **Base1);
 void Imprimir(Nodo **Base1);
 Nodo *pop(Nodo **Base1);
 
-int main(){
-    int j=0, i=0, op;
+int main()
+{
+    int j = 0, i = 0, op;
     char palavra[20], plv;
     Nodo *Topo1 = NULL;
-    Nodo *Base1 = NULL;//----------------------Pilha
+    Nodo *Base1 = NULL; //----------------------Pilha
 
-    do{
+    do
+    {
         printf("\n\t\t\tEscolha:\n\t{1}Escrever palavra\n\t{2}Palindroma\n\t{3}Imprimir\n\t{0}Sair\nOp:");
-        scanf("%d",&op);
-        switch(op){
+        scanf("%d", &op);
+        switch (op)
+        {
         case 0:
             Zerar(&Base1);
-        break;
+            break;
         case 1:
             printf("Digite uma palavra: ");
             fflush(stdin);
@@ -46,120 +50,156 @@ int main(){
             printf("Tamanho da palavra = %d", j);
             Base1 = NULL;
             Topo1 = NULL;
-            do{
+            do
+            {
                 plv = palavra[i];
                 Push(&Base1, &Topo1, plv);
                 i++;
-            }while(i!=j);
-                fflush(stdin);
-                break;
-        break;
+            } while (i != j);
+            fflush(stdin);
+            break;
+            break;
         case 2:
             Palindroma(&Base1, &Topo1);
-        break;
+            break;
         case 3:
             printf("\n\t\t\t\tPilha[1]:\n");
             Imprimir(&Base1);
-            //printf("\n\n\t\t\t\tPilha[2]:\n");
-            //Imprimir(&Base2);
-        break;
+            // printf("\n\n\t\t\t\tPilha[2]:\n");
+            // Imprimir(&Base2);
+            break;
         default:
             printf("Opcao invalida! Tente novamente.");
         }
-    }while(op!=0);
+    } while (op != 0);
 }
-void Push(Nodo **Base1, Nodo **Topo1, char palavra){
+void Push(Nodo **Base1, Nodo **Topo1, char palavra)
+{
     Nodo *Aux, *Anterior;
-    Nodo *novo = (Nodo*)malloc(sizeof(Nodo));
+    Nodo *novo = (Nodo *)malloc(sizeof(Nodo));
 
-    if(novo){
+    if (novo)
+    {
         novo->string = palavra;
         novo->prox = NULL;
-    }else{
+    }
+    else
+    {
         printf("Memoria indisponivel!\n");
     }
-    if(*Base1 == NULL){
-    	*Base1 = novo;
-    	*Topo1 = *Base1;
-    }else{
+    if (*Base1 == NULL)
+    {
+        *Base1 = novo;
+        *Topo1 = *Base1;
+    }
+    else
+    {
         Aux = *Topo1;
         Aux->prox = novo;
         *Topo1 = novo;
     }
 }
-void Palindroma(Nodo **Base1, Nodo **Topo1){
+void Palindroma(Nodo **Base1, Nodo **Topo1)
+{
     Nodo *Atual, *Anterior, *Ultimo, *Primeiro;
 
-    if(*Base1 == NULL){
+    if (*Base1 == NULL)
+    {
         printf("\n\tPilha VAZIA! Tente adicionar uma palavra primeiro.\n");
-    }else if((*Base1)->prox == NULL ){
+    }
+    else if ((*Base1)->prox == NULL)
+    {
         printf("\n\tA palavra e PALINDROMA.\n");
-    }else{
-            Primeiro = *Base1;
-            Ultimo = *Topo1;
-            Atual = *Base1;
-            if(Primeiro->string != Ultimo->string){
-                printf("A palavra nao e PALINDROMA!");
-            }else{
-                while(Primeiro->string == Ultimo->string){
-                    if(Primeiro != Ultimo){
-                        Primeiro = Primeiro->prox;
-                        Atual = *Base1;
-                        while(Atual != Ultimo){
-                            Anterior = Atual;
-                            Atual = Atual->prox;
-                        }
-                        Ultimo = Anterior;
-                    }else{
-                        printf("A palavra e PALINDROMA!");
-                        return 0;
+    }
+    else
+    {
+        Primeiro = *Base1;
+        Ultimo = *Topo1;
+        Atual = *Base1;
+        if (Primeiro->string != Ultimo->string)
+        {
+            printf("A palavra nao e PALINDROMA!");
+        }
+        else
+        {
+            while (Primeiro->string == Ultimo->string)
+            {
+                if (Primeiro != Ultimo)
+                {
+                    Primeiro = Primeiro->prox;
+                    Atual = *Base1;
+                    while (Atual != Ultimo)
+                    {
+                        Anterior = Atual;
+                        Atual = Atual->prox;
                     }
+                    Ultimo = Anterior;
+                }
+                else
+                {
+                    printf("A palavra e PALINDROMA!");
+                    return 0;
                 }
             }
-    }
-}
-void Zerar(Nodo **Base1){
-    Nodo *Prox, *Atual;
-    if(*Base1 != NULL){
-        Atual = *Base1;
-        while(Atual != NULL){
-        Prox = Atual->prox;
-        free(Atual);
-        Atual = Prox;
         }
     }
 }
-void Imprimir(Nodo **Base1){
-	Nodo *Aux;
-    int i=0;
-
-	if(*Base1 == NULL){
-		printf("\tA pilha se encontra vazia!\n");
-	}else{
-		Aux = *Base1;
-		while(Aux != NULL){
-			printf("\n\tAux[%d]->caracter = %c\tAux = %d\tAux->prox = %d",i, Aux->string, Aux, Aux->prox);
-			Aux = Aux->prox;
-			i++;
-		}
-	}
+void Zerar(Nodo **Base1)
+{
+    Nodo *Prox, *Atual;
+    if (*Base1 != NULL)
+    {
+        Atual = *Base1;
+        while (Atual != NULL)
+        {
+            Prox = Atual->prox;
+            free(Atual);
+            Atual = Prox;
+        }
+    }
 }
-Nodo *pop(Nodo **Base1){
-    Nodo *Ultimo, *Penultimo, *Tmp = NULL;;
+void Imprimir(Nodo **Base1)
+{
+    Nodo *Aux;
+    int i = 0;
 
-    if(*Base1 == NULL){
+    if (*Base1 == NULL)
+    {
+        printf("\tA pilha se encontra vazia!\n");
+    }
+    else
+    {
+        Aux = *Base1;
+        while (Aux != NULL)
+        {
+            printf("\n\tAux[%d]->caracter = %c\tAux = %d\tAux->prox = %d", i, Aux->string, Aux, Aux->prox);
+            Aux = Aux->prox;
+            i++;
+        }
+    }
+}
+Nodo *pop(Nodo **Base1)
+{
+    Nodo *Ultimo, *Penultimo, *Tmp = NULL;
+    ;
+
+    if (*Base1 == NULL)
+    {
         printf("A pilha esta vazia!\n\n");
         return NULL;
-    }else{
-    Ultimo = *Base1;
-    while(Ultimo->prox != Tmp){
-        Penultimo = Ultimo;
-        Ultimo = Ultimo->prox;
-        printf("1");
     }
-    printf("2");
-    return Ultimo;
-    Tmp = Ultimo;
+    else
+    {
+        Ultimo = *Base1;
+        while (Ultimo->prox != Tmp)
+        {
+            Penultimo = Ultimo;
+            Ultimo = Ultimo->prox;
+            printf("1");
+        }
+        printf("2");
+        return Ultimo;
+        Tmp = Ultimo;
     }
 }
 

@@ -1,26 +1,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-/* Faça um código em c que permita ao usuário buscar um valor em uma lista.
-O usuário digita um valor, você deve percorrer a lista e verificar se encontra o valor solicitado.
-a. Caso encontre, imprima o endereço do valor, o valor e o endereço do próximo.
-b. Caso não encontre, informe ao usuário.
-c. Caso a lista esteja vazia, informe ao usuário. */
-
-#include <stdlib.h>
-#include <stdio.h>
-
 typedef struct no
 {
 	int num;
 	struct no *prox;
 } Nodo;
-
 // Inserir
 void InserirInicio(Nodo **inicio, Nodo **fim);
 void InserirFim(Nodo **inicio, Nodo **fim);
 // Excluir
 void ExcluirInicio(Nodo **inicio);
+void InserirAnt(Nodo **inicio, Nodo **fim);
 void ExcluirFim(Nodo **inicio, Nodo **fim);
 // Exibir
 void Exibir(Nodo **inicio);
@@ -34,7 +25,7 @@ int main()
 	Nodo *fim = NULL;
 	do
 	{
-		printf("\nDigite \n [1]Inserir Inicio\n [2]Inserir Fim\n [3]Excluir Inicio\n [4]Excluir Fim\n [5]Imprimir\n [6]Busca\n [0]Sair: ");
+		printf("\nDigite \n [1]Inserir Inicio\n [2]Inserir Ant\n [3]Inserir Fim\n [4]Excluir Inicio\n [5]Excluir Fim\n [6]Imprimir\n [7]Busca\n [0]Sair: ");
 		scanf("%d", &op);
 		switch (op)
 		{
@@ -45,18 +36,22 @@ int main()
 			InserirInicio(&inicio, &fim);
 			break;
 		case 2:
-			InserirFim(&inicio, &fim);
+			InserirAnt(&inicio, &fim);
 			break;
 		case 3:
-			ExcluirInicio(&inicio);
+			InserirFim(&inicio, &fim);
 			break;
 		case 4:
-			ExcluirFim(&inicio, &fim);
+			ExcluirInicio(&inicio);
 			break;
 		case 5:
-			Exibir(&inicio);
+			ExcluirFim(&inicio, &fim);
 			break;
 		case 6:
+			system("cls");
+			Exibir(&inicio);
+			break;
+		case 7:
 			system("cls");
 			Busca(&inicio, &fim);
 			break;
@@ -90,10 +85,56 @@ void InserirInicio(Nodo **inicio, Nodo **fim)
 		}
 		else
 		{
-			Aux = (*inicio)->prox;
+			Aux = *inicio;
 			*inicio = novo;
 			(*inicio)->prox = Aux;
 		}
+	}
+}
+void InserirAnt(Nodo **inicio, Nodo **fim)
+{
+	int num;
+	Nodo *Anterior, *Atual;
+	Nodo *novo = (Nodo *)malloc(sizeof(Nodo));
+	printf("Digite o valor ao qual deseja inserir antes: ");
+	scanf("%d", &num);
+	if (novo)
+	{
+		printf("\nDigite um numero: ");
+		scanf("%d", &novo->num);
+		novo->prox = NULL;
+		Atual = *inicio;
+		if (Atual == NULL)
+		{
+			*inicio = novo;
+			*fim = *inicio;
+		}
+		else if (Atual->num == num)
+		{
+			*inicio = novo;
+			(*inicio)->prox = Atual;
+		}
+		else
+		{
+			while (Atual->num != num && Atual->prox != NULL)
+			{
+				Anterior = Atual;
+				Atual = Atual->prox;
+			}
+			if (Atual->num == num)
+			{
+				Anterior->prox = novo;
+				novo->prox = Atual;
+			}
+			else
+			{
+				printf("Numero nao encontrado!");
+			}
+		}
+	}
+	else
+	{
+		printf("Memoria indisponivel");
 	}
 }
 void InserirFim(Nodo **inicio, Nodo **fim)

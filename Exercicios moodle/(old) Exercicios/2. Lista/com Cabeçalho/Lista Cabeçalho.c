@@ -1,33 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 typedef struct nodo
 {
 	int cpf;
-	char curso[50];
+	char curso;
 	int ano;
 	struct nodo *prox;
 } no;
 
-// funcoes
+// funções
 int menu();
-void opcoes(int opt);
-void InserirFim();
-no *retirarInicio();
-no *retirarFim();
-void exibir();
-int esvaziar();
-
-no *LISTA = NULL;
-no *Aux = NULL;
-no *novo = NULL;
+void opcoes(no *LISTA, int opt);
+void InserirFim(no *LISTA);
+no *retirarInicio(no *LISTA);
+no *retirarFim(no *LISTA);
+void exibir(no *LISTA);
+no *aloca();
+int esvaziar(no *LISTA);
 
 // main
 int main()
 {
 	int opt;
-	LISTA = (no *)malloc(sizeof(no));
+	no *LISTA = (no *)malloc(sizeof(no));
 	if (!LISTA)
 	{
 		printf("Memoria indisponivel");
@@ -39,13 +35,13 @@ int main()
 		do
 		{
 			opt = menu();
-			opcoes(opt);
+			opcoes(LISTA, opt);
 		} while (opt > 0 && opt <= 4);
 	}
 	free(LISTA);
 }
 
-// funcoes principais
+// funções principais
 int menu()
 {
 	int opt;
@@ -59,21 +55,22 @@ int menu()
 	fflush(stdin);
 	return opt;
 }
-void opcoes(int opt)
+
+void opcoes(no *LISTA, int opt)
 {
 	int op;
 	no *tmp;
 	switch (opt)
 	{
 	case 0:
-		esvaziar();
+		esvaziar(LISTA);
 		printf("A Lista foi esvaziada com sucesso! \n");
 		break;
 	case 1:
-		InserirFim();
+		InserirFim(LISTA);
 		break;
 	case 2:
-		tmp = retirarInicio();
+		tmp = retirarInicio(LISTA);
 		if (tmp != NULL)
 		{
 			printf("O cpf retirado e: %d\n", tmp->cpf);
@@ -83,46 +80,33 @@ void opcoes(int opt)
 		}
 		break;
 	case 3:
-		tmp = retirarFim();
+		tmp = retirarFim(LISTA);
 		if (tmp != NULL)
 		{
 			printf("O cpf retirado e: %d\n", tmp->cpf);
-			printf("O curso retirado e: %s %s\n", tmp->curso);
+			printf("O curso retirado e: %c\n", tmp->curso);
 			printf("O ano de inicio retirado e: %d\n", tmp->ano);
 			free(tmp);
 		}
 		break;
 	case 4:
-		exibir();
+		exibir(LISTA);
 		break;
 	default:
 		printf("Opcao invalida. Tente novamente.\n");
 		break;
 	}
 }
-void InserirFim()
+
+void InserirFim(no *LISTA)
 {
-	novo = (no *)malloc(sizeof(no));
-	if (!novo)
+	no *Aux;
+	no *novo = aloca();
+	if (LISTA->prox == NULL)
 	{
-		printf("Memoria indisponivel. \n");
-		novo = NULL;
+		LISTA->prox = novo;
 	}
 	else
-	{
-		printf("Digite o cpf a ser inserido: \n");
-		scanf("%d", &novo->cpf);
-		fflush(stdin);
-		printf("Digite o curso a ser inserido: \n");
-		gets(novo->curso);
-		fflush(stdin);
-		printf("Digite o ano a ser inserido: \n");
-		scanf("%d", &novo->ano);
-		fflush(stdin);
-		novo->prox = NULL;
-	}
-
-	if (LISTA->prox != NULL)
 	{
 		Aux = LISTA->prox;
 		while (Aux->prox != NULL)
@@ -131,14 +115,9 @@ void InserirFim()
 		}
 		Aux->prox = novo;
 	}
-	else
-	{
-		LISTA->prox = novo;
-	}
-	novo = NULL;
-	Aux = NULL;
 }
-no *retirarInicio()
+
+no *retirarInicio(no *LISTA)
 {
 	no *Aux;
 	if (LISTA->prox == NULL)
@@ -153,7 +132,8 @@ no *retirarInicio()
 		return Aux;
 	}
 }
-no *retirarFim()
+
+no *retirarFim(no *LISTA)
 {
 	no *Atual, *Anterior;
 	if (LISTA->prox == NULL)
@@ -174,7 +154,8 @@ no *retirarFim()
 		return Atual;
 	}
 }
-void exibir()
+
+void exibir(no *LISTA)
 {
 	no *Aux;
 	if (LISTA->prox == NULL)
@@ -183,18 +164,44 @@ void exibir()
 	}
 	else
 	{
+		int i = 0;
 		Aux = LISTA->prox;
 		printf("Lista: \n");
 		while (Aux != NULL)
 		{
-			printf("Cpf:%d ano:%d curso:%s endereco:%d \n", Aux->cpf, Aux->ano, Aux->curso, Aux, &Aux);
+			i++;
+			printf("Pos:%d cpf:%d curso:%c ano:%d endereco:%d \n", i, Aux->cpf, Aux->curso, Aux->ano, &Aux);
 			Aux = Aux->prox;
 		}
 	}
 }
 
-// funcoes auxiliares
-int esvaziar()
+// funções auxiliares
+no *aloca()
+{
+	no *novo;
+	novo = (no *)malloc(sizeof(novo));
+	if (!novo)
+	{
+		printf("Memoria indisponivel. \n");
+		return NULL;
+	}
+	else
+	{
+		printf("Digite o cpf a ser inserido: \n");
+		scanf("%d", &novo->cpf);
+		fflush(stdin);
+		printf("Digite o curso a ser inserido: \n");
+		fflush(stdin);
+		scanf("%s", &novo->curso);
+		printf("Digite o ano a ser inserido: \n");
+		fflush(stdin);
+		scanf("%d", &novo->ano);
+		return novo;
+	}
+}
+
+int esvaziar(no *LISTA)
 {
 	int opt;
 	no *Aux, *Atual;

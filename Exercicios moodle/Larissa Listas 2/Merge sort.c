@@ -1,10 +1,10 @@
-/* descrição funcional: 
+/* descrição funcional:
       1. Ordena valores numericos de um vetor atraves do algoritmo Merge Sort.
-      
+
    lista de parâmetros:
       1. Dois vetores
       2. Uma variavel contendo o tamanho do vetor
-            
+
    valores de retorno:
       1. Não há valores definidos para o retorno dessa função.
 */
@@ -13,14 +13,14 @@ void mergeSort(int numbers[], int temp[], int array_size)
   m_sort(numbers, temp, 0, array_size - 1);
 }
 
-/* descrição funcional: 
-      1. Auxilia na ordenação de valores numericos de um vetor atraves do 
+/* descrição funcional:
+      1. Auxilia na ordenação de valores numericos de um vetor atraves do
       algoritmo Merge Sort.
-      
+
    lista de parâmetros:
       1. Dois vetores
       2. Duas variaveis inteiras
-            
+
    valores de retorno:
       1. Não há valores definidos para o retorno dessa função.
 */
@@ -32,20 +32,20 @@ void m_sort(int numbers[], int temp[], int left, int right)
   {
     mid = (right + left) / 2;
     m_sort(numbers, temp, left, mid);
-    m_sort(numbers, temp, mid+1, right);
+    m_sort(numbers, temp, mid + 1, right);
 
-    merge(numbers, temp, left, mid+1, right);
+    merge(numbers, temp, left, mid + 1, right);
   }
 }
 
-/* descrição funcional: 
-      1. Auxilia na ordenação de valores numericos de um vetor atraves do 
+/* descrição funcional:
+      1. Auxilia na ordenação de valores numericos de um vetor atraves do
       algoritmo Merge Sort.
-      
+
    lista de parâmetros:
       1. Dois vetores
       2. Tres variaves inteiras.
-            
+
    valores de retorno:
       1. Não há valores definidos para o retorno dessa função.
 */
@@ -63,7 +63,7 @@ void merge(int numbers[], int temp[], int left, int mid, int right)
     {
       temp[tmp_pos] = numbers[left];
       tmp_pos = tmp_pos + 1;
-      left = left +1;
+      left = left + 1;
     }
     else
     {
@@ -86,7 +86,7 @@ void merge(int numbers[], int temp[], int left, int mid, int right)
     tmp_pos = tmp_pos + 1;
   }
 
-  for (i=0; i <= num_elements; i++)
+  for (i = 0; i <= num_elements; i++)
   {
     numbers[right] = temp[right];
     right = right - 1;

@@ -3,20 +3,19 @@
 #include <string.h>
 
 /*
-Exercício 6.
+Exercï¿½cio 6.
 
-Considere que um estacionamento da Rua Direita, em Porto alegre, que é composto por uma única alameda que guarda até dez carros.
-Existe apenas uma entrada/saída no estacionamento, e esta extremidade da alameda dá acesso justamente à Rua Direita.
-Se chegar um cliente para retirar um carro que não seja o mais próximo da saída, todos os carros bloqueando seu caminho sairão do estacionamento.
-O carro do cliente será manobrado para fora do estacionamento, e os outros carros voltarão a ocupar a mesma sequência inicial.
+Considere que um estacionamento da Rua Direita, em Porto alegre, que ï¿½ composto por uma ï¿½nica alameda que guarda atï¿½ dez carros.
+Existe apenas uma entrada/saï¿½da no estacionamento, e esta extremidade da alameda dï¿½ acesso justamente ï¿½ Rua Direita.
+Se chegar um cliente para retirar um carro que nï¿½o seja o mais prï¿½ximo da saï¿½da, todos os carros bloqueando seu caminho sairï¿½o do estacionamento.
+O carro do cliente serï¿½ manobrado para fora do estacionamento, e os outros carros voltarï¿½o a ocupar a mesma sequï¿½ncia inicial.
 
 Escreva um programa que processe um grupo de linhas de entrada.
-Cada linha de entrada contém um ‘E’, de entrada, ou um ‘S’ de saída, e o número da placa do carro.
+Cada linha de entrada contï¿½m um ï¿½Eï¿½, de entrada, ou um ï¿½Sï¿½ de saï¿½da, e o nï¿½mero da placa do carro.
 Presume-se que os carros cheguem e partam na mesma ordem que entraram no estacionamento.
 O programa deve imprimir uma mensagem sempre que um carro  chegar ou sair.
-Quando um carro chegar, a mensagem deve especificar se existe ou não vaga para o carro no estacionamento.
-Se não houver vaga, o carro partirá sem entrar no estacionamento.
-Quando um carro sair do estacionamento, a mensagem deverá incluir o número de vezes em que o carro foi manobrado para fora
-do estacionamento para permitir que os outros carros saíssem.
+Quando um carro chegar, a mensagem deve especificar se existe ou nï¿½o vaga para o carro no estacionamento.
+Se nï¿½o houver vaga, o carro partirï¿½ sem entrar no estacionamento.
+Quando um carro sair do estacionamento, a mensagem deverï¿½ incluir o nï¿½mero de vezes em que o carro foi manobrado para fora
+do estacionamento para permitir que os outros carros saï¿½ssem.
 */
-

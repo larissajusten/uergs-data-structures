@@ -3,63 +3,71 @@
 #include <stdlib.h>
 int op;
 
-typedef struct filmes{
-    char nome[50];
-    int yfilme;
-    int yassistido;
-    int nota;
-    struct filmes *prox;
-}no;
+typedef struct filmes
+{
+	char nome[50];
+	int yfilme;
+	int yassistido;
+	int nota;
+	struct filmes *prox;
+} no;
 
-void InserirFinal(**inicio, **fim);
-void RetirarFinal(**inicio, **fim);
-void RetirarInicio(**inicio, **fim);
-void Exibir(**inicio, **fim);
+void InserirFinal(no **inicio, no **fim);
+void RetirarFinal(no **inicio, no **fim);
+void RetirarInicio(no **inicio);
+void Exibir(no **inicio);
 
-int main(){
+int main()
+{
 	no *inicio = NULL;
 	no *final = NULL;
-    do{
-        printf("[1]Inserir no final da LISTA.\n");
-        printf("[2]Excluir do final da LISTA.\n");
-        printf("[3]Excluir do inicio da LISTA.\n");
-        printf("[4]Imprimir LISTA.\n");
-        printf("[0]Sair.\n");
-        printf("A: ");
-        scanf("%d",&op);
+	do
+	{
+		printf("[1]Inserir no final da LISTA.\n");
+		printf("[2]Excluir do final da LISTA.\n");
+		printf("[3]Excluir do inicio da LISTA.\n");
+		printf("[4]Imprimir LISTA.\n");
+		printf("[0]Sair.\n");
+		printf("A: ");
+		scanf("%d", &op);
 
-        switch(op){
-            case 0:
-            esvaziar(&inicio, &fim);
-            printf("A Lista foi esvaziada com sucesso! \n");
-            break;
-            case 1:
-            InserirFinal(&inicio, &fim);
-            break;
-            case 2:
-            RetirarFinal(&inicio, &fim);
-            break;
-            case 3:
-            RetirarInicio(&inicio, &fim);
-            break;
-            case 4:
-            Exibir(&inicio, &fim);
-            break;
-            default:
-            printf("Op invalida!");
-        }
-    }while(op>=1 && op<=4);
+		switch (op)
+		{
+		case 0:
+			esvaziar(&inicio);
+			printf("A Lista foi esvaziada com sucesso! \n");
+			break;
+		case 1:
+			InserirFinal(&inicio, &final);
+			break;
+		case 2:
+			RetirarFinal(&inicio, &final);
+			break;
+		case 3:
+			RetirarInicio(&inicio);
+			break;
+		case 4:
+			Exibir(&inicio);
+			break;
+		default:
+			printf("Op invalida!");
+		}
+	} while (op >= 1 && op <= 4);
 }
 
-//funcoes
-void InserirFinal(*inicio, *fim){
-    no *Aux = NULL;
-    novo = (no*)malloc(sizeof(no));
-    novo->prox = NULL;
-	if(!novo){
+// funcoes
+void InserirFinal(no **inicio, no **fim)
+{
+	no *Aux = NULL;
+	no *novo = (no *)malloc(sizeof(no));
+	novo->prox = NULL;
+	if (!novo)
+	{
 		printf("Memoria indisponivel. \n");
-	}else{
-	    fflush(stdin);
+	}
+	else
+	{
+		fflush(stdin);
 		printf("Digite o nome do filme: ");
 		gets(novo->nome);
 		printf("Digite o ano do filme: ");
@@ -67,78 +75,103 @@ void InserirFinal(*inicio, *fim){
 		printf("Digite o ano que o filme foi assistido: ");
 		scanf("%d", &novo->yassistido);
 		printf("Digite a nota do filme: ");
-		scanf("%d",&novo->nota);
-		novo->prox=NULL;
+		scanf("%d", &novo->nota);
+		novo->prox = NULL;
 		printf("\n");
 	}
-	if(inicio == NULL){
-		inicio = novo;
-	}else{
-		 if(fim->prox !=NULL){
-	       	Aux = inicio->prox;
-	        while(Aux->prox !=NULL ){
-	            Aux=Aux->prox;
-	    	}
-	        Aux->prox=novo;
-   		}else{
-        	fim->prox = novo;
-		}	
+	if (*inicio == NULL)
+	{
+		*inicio = novo;
+		*fim = novo;
+	}
+	else
+	{
+		if ((*fim)->prox == novo)
+		{
+			*fim = novo;
+			while (Aux->prox != NULL)
+			{
+				Aux = Aux->prox;
+			}
+			Aux->prox = novo;
+		}
+		else
+		{
+			(*fim)->prox = novo;
+		}
 	}
 	novo = NULL;
 	Aux = NULL;
 }
-void RetirarFinal(*inicio, *fim){
-    no *Atual = NULL;
-    no *Anterior = NULL;
+void RetirarFinal(no **inicio, no **fim)
+{
+	no *Atual = NULL;
+	no *Anterior = NULL;
 
-	if (LISTA->prox==NULL){
+	if (*inicio == NULL)
+	{
 		printf("Lista encontra-se vazia. \n");
-	}else{
-		Atual=LISTA->prox;
-		Anterior=LISTA;
-		while(Atual->prox!=NULL){
-			Anterior=Atual;
-			Atual=Atual->prox;
+	}
+	else
+	{
+		Atual = (*inicio)->prox;
+		Anterior = *inicio;
+		while (Atual->prox != NULL)
+		{
+			Anterior = Atual;
+			Atual = Atual->prox;
 		}
-		Anterior->prox=NULL;
+		Anterior->prox = NULL;
 		free(Atual);
 	}
 }
-void RetirarInicio(**inicio){
-    no *Aux;
-	if (*inicio->prox==NULL){
+void RetirarInicio(no **inicio)
+{
+	no *Aux;
+	if (*inicio == NULL)
+	{
 		printf("Lista encontra-se vazia. \n");
-	}else{
-		Aux=*inicio->prox;
-		*inicio->prox=Aux->prox;
+	}
+	else
+	{
+		Aux = *inicio;
+		*inicio = Aux->prox;
 		free(Aux);
 	}
 }
-void Exibir(**inicio, **fim){
-    no *Aux;
-  	if (LISTA->prox == NULL){
+void Exibir(no **inicio)
+{
+	no *Aux;
+	if (*inicio == NULL)
+	{
 		printf("A lista encontra-se vazia. \n");
-	}else{
-		Aux=LISTA->prox;
+	}
+	else
+	{
+		Aux = *inicio;
 		printf("Lista: \n");
-			while(Aux!=NULL){
-				printf("Nome:%s \nAno do filme:%d \nAno Assistido:%d \nNota:%d \n", Aux->nome, Aux->yfilme, Aux->yassistido, Aux, &Aux);
-				Aux=Aux->prox;
-			}
+		while (Aux != NULL)
+		{
+			printf("Nome:%s \nAno do filme:%d \nAno Assistido:%d \nNota:%d \n", Aux->nome, Aux->yfilme, Aux->yassistido, Aux->nota);
+			Aux = Aux->prox;
+		}
 	}
 }
-int esvaziar(**inicio, **fim){
+int esvaziar(no **inicio)
+{
 	int opt;
 	no *Aux, *Atual;
-	if(*inicio->prox!=NULL){
-		Atual=*inicio->prox;
-		while(Atual!=NULL){
-			Aux=Atual->prox;
+	if (*inicio != NULL)
+	{
+		Atual = *inicio;
+		while (Atual != NULL)
+		{
+			Aux = Atual->prox;
 			free(Atual);
-			Atual=Aux;
+			Atual = Aux;
 		}
 		free(Aux);
 	}
-	opt=main();
+	opt = main();
 	return opt;
 }

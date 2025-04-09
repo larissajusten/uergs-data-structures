@@ -102,6 +102,7 @@ void Push(Nodo **Topo, Nodo **Base, char carac)
         printf("Memoria indisponivel!\n");
     }
 }
+
 void Imprimir(Nodo **Base)
 {
     Nodo *Aux;
@@ -122,6 +123,7 @@ void Imprimir(Nodo **Base)
         }
     }
 }
+
 void P3(Nodo **Topo, Nodo **Base, Nodo **Topo2, Nodo **Base2)
 {
     Nodo *AuxP1,
@@ -147,6 +149,7 @@ void P3(Nodo **Topo, Nodo **Base, Nodo **Topo2, Nodo **Base2)
         Push(Topo2, Base2, caract);
     }
 }
+
 void Zerar(Nodo **Base1)
 {
     Nodo *Prox, *Atual;
@@ -161,6 +164,7 @@ void Zerar(Nodo **Base1)
         }
     }
 }
+
 Nodo *Pop(Nodo **Base, Nodo **Topo)
 {
     Nodo *Atual, *Anterior;
